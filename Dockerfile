@@ -1,6 +1,6 @@
 # Use the official Microsoft .NET SDK image as the base image
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+WORKDIR ./
 
 # Copy everything
 COPY . .
@@ -9,12 +9,12 @@ COPY . .
 RUN dotnet restore
 
 # Build and publish
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish -c Release -o ./app/publish
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /app
-COPY --from=build /app/publish .
+WORKDIR ./
+COPY --from=build ./app/publish .
 
 # Expose port 80
 EXPOSE 80
