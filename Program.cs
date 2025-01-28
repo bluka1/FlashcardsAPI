@@ -55,6 +55,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
+            .AllowAnyOrigin()     // In production, you might want to restrict this to specific origins
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 // Add database context
 builder.Services.AddDbContext<FlashcardsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -69,6 +80,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 // Define endpoints
 app.MapGet("/flashcards", async (FlashcardsDbContext db) =>
