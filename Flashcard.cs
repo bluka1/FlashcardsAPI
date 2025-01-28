@@ -1,4 +1,4 @@
-namespace FlashcardsApi;
+namespace flashcards_api;
 
 public class Flashcard
 {

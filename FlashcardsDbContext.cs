@@ -1,9 +1,19 @@
-using FlashcardsApi;
 using Microsoft.EntityFrameworkCore;
 
 namespace flashcards_api;
 
-public class FlashcardsDbContext(DbContextOptions<FlashcardsDbContext> options) : DbContext(options)
+public class FlashcardsDbContext : DbContext
 {
-    public DbSet<Flashcard> Flashcards => Set<Flashcard>();
+    public FlashcardsDbContext(DbContextOptions<FlashcardsDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Flashcard> Flashcards { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Flashcard>()
+            .HasKey(f => f.Id);
+    }
 }

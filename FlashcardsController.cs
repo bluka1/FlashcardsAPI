@@ -1,4 +1,3 @@
-using FlashcardsApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
