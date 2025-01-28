@@ -9,4 +9,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 81
-ENTRYPOINT ["dotnet", "FlashcardsApi.dll"]
+ENTRYPOINT ["dotnet", "flashcards-api.dll"]
