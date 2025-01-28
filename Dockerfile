@@ -8,5 +8,5 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-EXPOSE 81
+EXPOSE 80
 ENTRYPOINT ["dotnet", "flashcards-api.dll"]
