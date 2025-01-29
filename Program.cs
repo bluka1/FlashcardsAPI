@@ -72,6 +72,40 @@ builder.Services.AddDbContext<FlashcardsDbContext>(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<FlashcardsDbContext>();
+    
+    // Apply migrations
+    db.Database.Migrate();
+    
+    // Add seed data if the table is empty
+    if (!db.Flashcards.Any())
+    {
+        db.Flashcards.AddRange(
+            new Flashcard 
+            { 
+                DeckId = 1, 
+                Question = "What is Docker?", 
+                Answer = "A platform for developing, shipping, and running applications in containers" 
+            },
+            new Flashcard 
+            { 
+                DeckId = 1, 
+                Question = "What is .NET?", 
+                Answer = "A free, open-source development platform for building many different types of applications" 
+            },
+            new Flashcard 
+            { 
+                DeckId = 1,
+                Question = "What is PostgreSQL?", 
+                Answer = "A powerful, open source object-relational database system" 
+            }
+        );
+        db.SaveChanges();
+    }
+}
+
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
