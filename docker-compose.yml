@@ -6,16 +6,16 @@ services:
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=${DB_HOST};Port=5432;Database=${DB_NAME};User Id=${DB_USER};Password=${DB_PASSWORD};Ssl Mode=Require;Trust Server Certificate=true;
+      - ConnectionStrings__DefaultConnection=Server=dpg-cu9trtpopnds73e8mpug-a;Port=5432;Database=flashcards_buz5;User Id=flashcards_buz5_user;Password=QzpgHsuq6HJj6sI2wXncQyH5pLPL0jXp;Ssl Mode=Require;Trust Server Certificate=true;
     depends_on:
       - db
   
   db:
     image: postgres:15
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=flashcards_buz5
+      - POSTGRES_USER=flashcards_buz5_user
+      - POSTGRES_PASSWORD=QzpgHsuq6HJj6sI2wXncQyH5pLPL0jXp
     ports:
       - "5432:5432"
     volumes:
