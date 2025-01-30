@@ -1,9 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace flashcards_api;
 
-public class Flashcard
+public class Flashcard : BaseEntity
 {
-    public int Id { get; set; }
+    [ForeignKey("DeckId")]
     public int DeckId { get; set; }
-    public string Question { get; set; }
-    public string Answer { get; set; }
+
+    [Required] public string Question { get; set; } = null!;
+
+    [Required] public string Answer { get; set; } = null!;
 }
