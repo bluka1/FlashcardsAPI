@@ -6,15 +6,28 @@ namespace flashcards_api;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class FlashcardsController(FlashcardsDbContext context) : ControllerBase
+public class FlashcardsController(FlashcardsDbContext context, ILogger<FlashcardsController> logger) : ControllerBase
 {
   private readonly FlashcardsDbContext _context = context;
+  private readonly ILogger<FlashcardsController> _logger = logger;
 
   [HttpGet]
   public async Task<IActionResult> GetAllFlashcards()
   {
-    var flashcards = await _context.Flashcards.ToListAsync();
-    return Ok(flashcards);
+    _logger.LogInformation("Attempting to fetch flashcards");
+    try 
+    {
+      var flashcards = await _context.Flashcards.ToListAsync();
+      _logger.LogInformation($"Successfully retrieved {flashcards.Count} flashcards");
+      return Ok(flashcards);
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "Error fetching flashcards");
+      return StatusCode(500, "Internal server error");
+    }
+    // var flashcards = await _context.Flashcards.ToListAsync();
+    // return Ok(flashcards);
   }
 
   [HttpGet("{id:int}")]
