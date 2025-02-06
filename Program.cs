@@ -40,15 +40,24 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<FlashcardsDbContext>();
-    
-    // Apply migrations
-    db.Database.Migrate();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<FlashcardsDbContext>();
+    try
+    {
+        context.Database.Migrate();
+        Console.WriteLine("Database migration completed successfully");
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database");
+        Console.WriteLine($"Error during database migration: {ex.Message}");
+    }
     
     // Add seed data if the table is empty
-    if (!db.Flashcards.Any())
+    if (!context.Flashcards.Any())
     {
-        db.Flashcards.AddRange(
+        context.Flashcards.AddRange(
             new Flashcard 
             { 
                 DeckId = 1, 
@@ -68,7 +77,7 @@ using (var scope = app.Services.CreateScope())
                 Answer = "A powerful, open source object-relational database system" 
             }
         );
-        db.SaveChanges();
+        context.SaveChanges();
     }
 }
 
