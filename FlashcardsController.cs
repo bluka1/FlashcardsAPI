@@ -6,28 +6,15 @@ namespace flashcards_api;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class FlashcardsController(FlashcardsDbContext context, ILogger<FlashcardsController> logger) : ControllerBase
+public class FlashcardsController(FlashcardsDbContext context) : ControllerBase
 {
   private readonly FlashcardsDbContext _context = context;
-  private readonly ILogger<FlashcardsController> _logger = logger;
 
   [HttpGet]
   public async Task<IActionResult> GetAllFlashcards()
   {
-    _logger.LogInformation("Attempting to fetch flashcards");
-    try 
-    {
-      var flashcards = await _context.Flashcards.ToListAsync();
-      _logger.LogInformation($"Successfully retrieved {flashcards.Count} flashcards");
-      return Ok(flashcards);
-    }
-    catch (Exception ex)
-    {
-      _logger.LogError(ex, "Error fetching flashcards");
-      return StatusCode(500, "Internal server error");
-    }
-    // var flashcards = await _context.Flashcards.ToListAsync();
-    // return Ok(flashcards);
+    var flashcards = await _context.Flashcards.ToListAsync();
+    return Ok(flashcards);
   }
 
   [HttpGet("{id:int}")]
@@ -52,22 +39,22 @@ public class FlashcardsController(FlashcardsDbContext context, ILogger<Flashcard
     }
   }
 
-  // [HttpPut("{id:int}")]
-  // public async Task<IActionResult> UpdateFlashcard([FromBody] Flashcard flashcard)
-  // {
-  //   var existingFlashcard = await _context.Flashcards.FindAsync(flashcard.Id);
-  //   
-  //   if (existingFlashcard == null)
-  //   {
-  //     return NotFound();
-  //   }
-  //   
-  //   existingFlashcard.Answer = flashcard.Answer;
-  //   existingFlashcard.Question = flashcard.Question;
-  //   
-  //   await _context.SaveChangesAsync();
-  //   return Ok();
-  // }
+  [HttpPut("{id:int}")]
+  public async Task<IActionResult> UpdateFlashcard([FromRoute] int id, [FromBody] Flashcard flashcard)
+  {
+    var existingFlashcard = await _context.Flashcards.AsTracking().SingleOrDefaultAsync(f => f.Id == id);
+    
+    if (existingFlashcard == null)
+    {
+      return NotFound();
+    }
+    
+    existingFlashcard.Answer = flashcard.Answer;
+    existingFlashcard.Question = flashcard.Question;
+    
+    await _context.SaveChangesAsync();
+    return Ok();
+  }
 
   [HttpDelete("{id:int}")]
   public async Task<IActionResult> DeleteFlashcard(int id)

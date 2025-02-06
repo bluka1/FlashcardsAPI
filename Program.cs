@@ -30,7 +30,6 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
-// Add database context
 builder.Services.AddDbContext<FlashcardsDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -45,13 +44,11 @@ using (var scope = app.Services.CreateScope())
     try
     {
         context.Database.Migrate();
-        Console.WriteLine("Database migration completed successfully");
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while migrating the database");
-        Console.WriteLine($"Error during database migration: {ex.Message}");
     }
     
     // Add seed data if the table is empty
@@ -81,17 +78,13 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        // options.InjectStylesheet("/swagger-ui/custom.css");
-    });
-    // app.UseHsts();
-}
+    // TODO: options.InjectStylesheet("/swagger-ui/custom.css");
+});
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseCors();
 app.MapControllers();
 app.Run();
