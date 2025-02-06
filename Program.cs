@@ -88,9 +88,10 @@ if (app.Environment.IsDevelopment())
     {
         // options.InjectStylesheet("/swagger-ui/custom.css");
     });
+    // app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseCors();
 app.MapControllers();
 app.Run();
