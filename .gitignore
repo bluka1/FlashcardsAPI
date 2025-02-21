@@ -63,10 +63,14 @@ mono_crash.*
 *.nuget.targets
 
 # Local configuration files
-appsettings.Development.json
-appsettings.Local.json
+*appsettings.json
+*appsettings.Development.json
+*appsettings.Local.json
 *.Development.json
 *.Local.json
+
+# Explicitly keep example config
+!appsettings.example.json
 
 # Environment Variables
 .env
