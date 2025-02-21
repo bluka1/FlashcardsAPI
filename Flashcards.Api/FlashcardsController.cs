@@ -1,5 +1,6 @@
-using flashcards_api;
+using Flashcards.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Flashcards.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flashcards.Api;
@@ -25,11 +26,11 @@ public class FlashcardsController(FlashcardsDbContext context) : ControllerBase
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateFlashcard([FromBody] Flashcard flashcard)
+  public async Task<IActionResult> CreateFlashcard([FromBody] FlashcardRequestParams flashcard)
   {
     try
     {
-      _context.Flashcards.Add(flashcard);
+      _context.Flashcards.Add(new Flashcard() {Answer = flashcard.Answer, Question = flashcard.Question});
       await _context.SaveChangesAsync();
       return Ok();
     }
@@ -41,7 +42,7 @@ public class FlashcardsController(FlashcardsDbContext context) : ControllerBase
   }
 
   [HttpPut("{id:int}")]
-  public async Task<IActionResult> UpdateFlashcard([FromRoute] int id, [FromBody] Flashcard flashcard)
+  public async Task<IActionResult> UpdateFlashcard([FromRoute] int id, [FromBody] FlashcardRequestParams flashcard)
   {
     var existingFlashcard = await _context.Flashcards.AsTracking().SingleOrDefaultAsync(f => f.Id == id);
     

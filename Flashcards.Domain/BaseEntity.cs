@@ -1,4 +1,4 @@
-namespace Flashcards.Api;
+namespace Flashcards.Domain;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
