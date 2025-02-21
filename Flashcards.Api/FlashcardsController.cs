@@ -1,7 +1,8 @@
+using flashcards_api;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace flashcards_api;
+namespace Flashcards.Api;
 
 [ApiController]
 [Route("api/[controller]")]

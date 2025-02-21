@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace flashcards_api;
+namespace Flashcards.Api;
 
 public static class StaticSwaggerData
 {

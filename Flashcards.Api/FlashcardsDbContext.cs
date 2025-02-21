@@ -1,13 +1,12 @@
+using flashcards_api;
 using Microsoft.EntityFrameworkCore;
 
-namespace flashcards_api;
+namespace Flashcards.Api;
 
 public class FlashcardsDbContext : DbContext
 {
     public FlashcardsDbContext(DbContextOptions<FlashcardsDbContext> options)
-        : base(options)
-    {
-    }
+        : base(options) {}
 
     public DbSet<Flashcard> Flashcards { get; set; }
 

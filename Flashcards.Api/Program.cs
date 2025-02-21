@@ -1,5 +1,5 @@
 using flashcards_api;
-
+using Flashcards.Api;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -51,31 +51,7 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while migrating the database");
     }
     
-    // Add seed data if the table is empty
-    if (!context.Flashcards.Any())
-    {
-        context.Flashcards.AddRange(
-            new Flashcard 
-            { 
-                DeckId = 1, 
-                Question = "What is Docker?", 
-                Answer = "A platform for developing, shipping, and running applications in containers" 
-            },
-            new Flashcard 
-            { 
-                DeckId = 1, 
-                Question = "What is .NET?", 
-                Answer = "A free, open-source development platform for building many different types of applications" 
-            },
-            new Flashcard 
-            { 
-                DeckId = 1,
-                Question = "What is PostgreSQL?", 
-                Answer = "A powerful, open source object-relational database system" 
-            }
-        );
-        context.SaveChanges();
-    }
+    context.SaveChanges();
 }
 
 app.UseSwagger();
@@ -88,3 +64,5 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.MapControllers();
 app.Run();
+
+public partial class Program { }
