@@ -5,6 +5,14 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcards.Api", "Flashcards.Api\Flashcards.Api.csproj", "{BB2F28CC-B07A-4C62-873B-DE716FD8736E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcards.Application", "Flashcards.Application\Flashcards.Application.csproj", "{1FB13652-4CCC-447D-B47E-11FF8BEFE484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcards.Contracts", "Flashcards.Contracts\Flashcards.Contracts.csproj", "{4B1EC532-0FFE-40A7-982D-D2B532328E84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcards.Domain", "Flashcards.Domain\Flashcards.Domain.csproj", "{D184F6AF-4321-4B2E-A15D-54CF5F75D2B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flashcards.Infrastructure", "Flashcards.Infrastructure\Flashcards.Infrastructure.csproj", "{C012C660-7AEA-4277-AEE1-80E2D22891BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +26,21 @@ Global
 		{BB2F28CC-B07A-4C62-873B-DE716FD8736E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2F28CC-B07A-4C62-873B-DE716FD8736E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2F28CC-B07A-4C62-873B-DE716FD8736E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB13652-4CCC-447D-B47E-11FF8BEFE484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB13652-4CCC-447D-B47E-11FF8BEFE484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB13652-4CCC-447D-B47E-11FF8BEFE484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB13652-4CCC-447D-B47E-11FF8BEFE484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B1EC532-0FFE-40A7-982D-D2B532328E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B1EC532-0FFE-40A7-982D-D2B532328E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B1EC532-0FFE-40A7-982D-D2B532328E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B1EC532-0FFE-40A7-982D-D2B532328E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D184F6AF-4321-4B2E-A15D-54CF5F75D2B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D184F6AF-4321-4B2E-A15D-54CF5F75D2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D184F6AF-4321-4B2E-A15D-54CF5F75D2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D184F6AF-4321-4B2E-A15D-54CF5F75D2B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C012C660-7AEA-4277-AEE1-80E2D22891BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C012C660-7AEA-4277-AEE1-80E2D22891BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C012C660-7AEA-4277-AEE1-80E2D22891BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C012C660-7AEA-4277-AEE1-80E2D22891BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

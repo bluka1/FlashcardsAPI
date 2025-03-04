@@ -1,7 +1,7 @@
-using flashcards_api;
 using Microsoft.EntityFrameworkCore;
+using Flashcards.Domain;
 
-namespace Flashcards.Api;
+namespace Flashcards.Infrastructure;
 
 public class FlashcardsDbContext : DbContext
 {
