@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Flashcards.Api;
+namespace Flashcards.Contracts;
 
-public class FlashcardRequestParams
+public class FlashcardsRequest
 {
     public int DeckId { get; set; }
 

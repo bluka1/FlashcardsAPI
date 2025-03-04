@@ -5,6 +5,13 @@ namespace Flashcards.Domain;
 
 public class Flashcard : BaseEntity
 {
+    public Flashcard(int deckId, string question, string answer)
+    {
+        DeckId = deckId;
+        Question = question;
+        Answer = answer;
+    }
+    
     [ForeignKey("DeckId")]
     public int DeckId { get; set; }
 

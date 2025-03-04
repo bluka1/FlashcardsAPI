@@ -1,38 +1,44 @@
-using Flashcards.Domain;
+using Flashcards.Application.Flashcards;
+using Flashcards.Application.Flashcards.Commands;
 using Microsoft.AspNetCore.Mvc;
-using Flashcards.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+using Flashcards.Contracts;
+using Flashcards.Application.Flashcards.Queries;
+using MediatR;
 
 namespace Flashcards.Api;
 
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class FlashcardsController(FlashcardsDbContext context) : ControllerBase
+public class FlashcardsController(ISender mediator) : ControllerBase
 {
-  private readonly FlashcardsDbContext _context = context;
-
+  private readonly ISender _mediator = mediator;
+  
   [HttpGet]
   public async Task<IActionResult> GetAllFlashcards()
   {
-    var flashcards = await _context.Flashcards.ToListAsync();
+    var flashcards = await _mediator.Send(new GetFlashcardsQuery());
+    if (!flashcards.Any()) return NotFound();
     return Ok(flashcards);
   }
 
   [HttpGet("{id:int}")]
-  public async Task<IActionResult> GetFlashcardById(int id)
+  public async Task<ActionResult<FlashcardDto>> GetFlashcardById(int id)
   {
-    return Ok(await _context.Flashcards.FindAsync(id));
+    var flashcard = await _mediator.Send(new GetFlashcardByIdQuery(id));
+    if (flashcard == null) return NotFound();
+    return Ok(flashcard);
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateFlashcard([FromBody] FlashcardRequestParams flashcard)
+  public async Task<ActionResult<FlashcardDto>> CreateFlashcard([FromBody] FlashcardsRequest flashcardsRequest)
   {
     try
     {
-      _context.Flashcards.Add(new Flashcard() {Answer = flashcard.Answer, Question = flashcard.Question});
-      await _context.SaveChangesAsync();
-      return Ok();
+      var flashcard = await _mediator.Send(new CreateFlashcardCommand(new FlashcardRequestDto(flashcardsRequest.DeckId, flashcardsRequest
+          .Question, flashcardsRequest.Answer)));
+      if (flashcard == null) return BadRequest();
+      return Ok(flashcard);
     }
     catch (Exception e)
     {
@@ -42,34 +48,18 @@ public class FlashcardsController(FlashcardsDbContext context) : ControllerBase
   }
 
   [HttpPut("{id:int}")]
-  public async Task<IActionResult> UpdateFlashcard([FromRoute] int id, [FromBody] FlashcardRequestParams flashcard)
+  public async Task<ActionResult<FlashcardDto>> UpdateFlashcard([FromRoute] int id, [FromBody] FlashcardDto flashcardDto)
   {
-    var existingFlashcard = await _context.Flashcards.AsTracking().SingleOrDefaultAsync(f => f.Id == id);
-    
-    if (existingFlashcard == null)
-    {
-      return NotFound();
-    }
-    
-    existingFlashcard.Answer = flashcard.Answer;
-    existingFlashcard.Question = flashcard.Question;
-    
-    await _context.SaveChangesAsync();
-    return Ok();
+    var flashcard = await _mediator.Send(new UpdateFlashcardCommand(flashcardDto));
+    if (flashcard == null) return NotFound();
+    return Ok(flashcard);
   }
 
   [HttpDelete("{id:int}")]
   public async Task<IActionResult> DeleteFlashcard(int id)
   {
-    var existingFlashcard = await _context.Flashcards.FindAsync(id);
-    
-    if (existingFlashcard == null)
-    {
-      return NotFound();
-    }
-    
-    _context.Flashcards.Remove(existingFlashcard);
-    await _context.SaveChangesAsync();
+    var result = await _mediator.Send(new DeleteFlashcardCommand(id));
+    if (result == null) return NotFound();
     return Ok();
   }
 }

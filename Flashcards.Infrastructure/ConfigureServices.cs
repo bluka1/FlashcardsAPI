@@ -1,8 +1,8 @@
+using Flashcards.Application.Common.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Flashcards.Infrastructure;
 
@@ -12,6 +12,7 @@ public static class ConfigureServices
     {
         services.AddDbContext<FlashcardsDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        services.AddScoped<IFlashcardsRepository, FlashcardsRepository>();
         return services;
     }
 
@@ -23,6 +24,7 @@ public static class ConfigureServices
             var context = services.GetRequiredService<FlashcardsDbContext>();
             try
             {
+                context.Database.EnsureCreated();
                 context.Database.Migrate();
             }
             catch (Exception ex)

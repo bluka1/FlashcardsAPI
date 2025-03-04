@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Flashcards.Application\Flashcards.Application.csproj" />
-    <ProjectReference Include="..\Flashcards.Domain\Flashcards.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

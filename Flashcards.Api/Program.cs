@@ -1,4 +1,5 @@
 using Flashcards.Api;
+using Flashcards.Application;
 using Flashcards.Infrastructure;
 using Microsoft.OpenApi.Models;
 
@@ -30,7 +31,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 builder.Services
-    .AddInfrastructureServices(builder.Configuration);
+    .AddInfrastructureServices(builder.Configuration)
+    .AddApplicationDeps();
 
 builder.Services.AddEndpointsApiExplorer();
 
